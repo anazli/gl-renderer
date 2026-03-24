@@ -8,6 +8,14 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 find_package(OpenGL REQUIRED)
 
+include(FetchContent)
+FetchContent_Declare(
+  math
+  GIT_REPOSITORY https://github.com/anazli/math.git
+  GIT_TAG main
+)
+FetchContent_MakeAvailable(math)
+
 if(LINUX)
 	include(FetchContent)
 
@@ -35,12 +43,6 @@ add_library(${PROJECT_NAME}
 	include/glad/glad.h
 	include/KHR/khrplatform.h
 	include/stb/stb_image.h
-	include/math/constants.h
-	include/math/vec2.h
-	include/math/vec3.h
-	include/math/vec4.h
-	include/math/mat4.h
-	include/math/quat.h
 
 	src/application.cpp
 	src/draw.cpp
@@ -90,12 +92,18 @@ else()
 	)
 endif()
 
+target_link_libraries(${PROJECT_NAME} PRIVATE math)
+
 if(TARGET OpenGL::GL)
 	target_link_libraries(${PROJECT_NAME} PUBLIC OpenGL::GL)
 else()
 	if(OPENGL_gl_LIBRARY)
 		target_link_libraries(${PROJECT_NAME} PUBLIC ${OPENGL_gl_LIBRARY})
 	endif()
+endif()
+
+if(LINUX)
+	target_link_libraries(${PROJECT_NAME} PRIVATE glfw)
 endif()
 
 # Main target for testing sample applications

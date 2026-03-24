@@ -1,12 +1,14 @@
 #pragma once
 
+#include <mat4.h>
+#include <vec2.h>
+#include <vec3.h>
+#include <vec4.h>
+
 #include <vector>
 
 #include "glad/glad.h"
-#include "math/mat4.h"
-#include "math/vec2.h"
-#include "math/vec3.h"
-#include "math/vec4.h"
+
 
 namespace core {
 template <typename T>

@@ -1,9 +1,11 @@
 #include "sample1.h"
 
+#include <mat4.h>
+#include <quat.h>
+
 #include "draw.h"
-#include "math/mat4.h"
-#include "math/quat.h"
 #include "uniform.h"
+
 
 Sample1::Sample1() : core::Application(), m_rotation(0.f) {}
 
