@@ -1,9 +1,11 @@
 #include "shader.h"
 
+#include <cstring>
 #include <fstream>
 #include <iostream>
 
 #include "glad/glad.h"
+
 
 core::Shader::Shader() : m_handle(glCreateProgram()) {}
 
