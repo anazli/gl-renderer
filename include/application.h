@@ -1,9 +1,9 @@
 #pragma once
 
+#include <glad/glad.h>
+
 #include <filesystem>
 #include <memory>
-
-#include "glad/glad.h"
 
 namespace core {
 class Application {
