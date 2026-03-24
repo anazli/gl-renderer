@@ -22,23 +22,24 @@ class Uniform {
   static void SetData(unsigned int slot, T* array, unsigned int length);
 };
 
-#define UNIFORM_IMPL(gl_func, T, D)                                           \
-  template <>                                                                 \
-  void Uniform<T>::SetData(unsigned int slot, T* data, unsigned int length) { \
-    gl_func(slot, static_cast<GLsizei>(length), reinterpret_cast<D*>(data));  \
+#define UNIFORM_IMPL(gl_func, T, D)                                          \
+  template <>                                                                \
+  inline void Uniform<T>::SetData(unsigned int slot, T* data,                \
+                                  unsigned int length) {                     \
+    gl_func(slot, static_cast<GLsizei>(length), reinterpret_cast<D*>(data)); \
   }
 
-template Uniform<int>;
-template Uniform<float>;
-template Uniform<Vec2i>;
-template Uniform<Vec2f>;
-template Uniform<Vec3i>;
-template Uniform<Vec3f>;
-template Uniform<Vec4i>;
-template Uniform<Vec4f>;
-template Uniform<Mat4f>;
-template <typename T>
+template class Uniform<int>;
+template class Uniform<float>;
+template class Uniform<Vec2i>;
+template class Uniform<Vec2f>;
+template class Uniform<Vec3i>;
+template class Uniform<Vec3f>;
+template class Uniform<Vec4i>;
+template class Uniform<Vec4f>;
+template class Uniform<Mat4f>;
 
+template <typename T>
 inline void Uniform<T>::SetData(unsigned int slot, T& value) {
   SetData(slot, static_cast<T*>(&value), 1);
 }
