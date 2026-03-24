@@ -1,14 +1,14 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.25)
 
 project(animation LANGUAGES C CXX)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 find_package(OpenGL REQUIRED)
 
-add_library(animation
+add_library(${PROJECT_NAME}
 	include/application.h
 	include/attribute.h
 	include/draw.h
@@ -39,45 +39,45 @@ add_library(animation
 	src/sample1/sample1.h
 )
 
-add_executable(animation-app src/main.cpp)
-target_link_libraries(animation-app PRIVATE animation)
-
-target_include_directories(animation
+target_include_directories(${PROJECT_NAME}
 	PUBLIC
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 		$<INSTALL_INTERFACE:include>
 )
 
 set_source_files_properties(src/glad.c PROPERTIES LANGUAGE C)
-target_compile_definitions(animation PRIVATE
+target_compile_definitions(${PROJECT_NAME} PRIVATE
 	$<$<COMPILE_LANGUAGE:C>:GLAD_GLAPI_EXPORT_BUILD>
 	ASSETS_DIR="${CMAKE_SOURCE_DIR}/assets"
 	SHADERS_DIR="${CMAKE_SOURCE_DIR}/shaders"
 )
 
-# Disable specific MSVC warnings when building for Windows using generator expressions
-# Applies only when the compiler is MSVC and the platform is Windows
-target_compile_options(animation PRIVATE
+target_compile_options(${PROJECT_NAME} PRIVATE
 	$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<PLATFORM_ID:Windows>>:/wd28251>
 	$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<PLATFORM_ID:Windows>>:/wd28159>
 )
 
 if(MSVC)
-	target_link_options(animation PRIVATE
+	target_link_options(${PROJECT_NAME} PRIVATE
 		$<$<CONFIG:Debug>:/SUBSYSTEM:CONSOLE>
 		$<$<CONFIG:Release>:/SUBSYSTEM:WINDOWS>
 	)
 else()
-	target_link_options(animation PRIVATE
+	target_link_options(${PROJECT_NAME} PRIVATE
 		$<$<CONFIG:Debug>:-Wl,-subsystem,console>
 		$<$<CONFIG:Release>:-Wl,-subsystem,windows>
 	)
 endif()
 
 if(TARGET OpenGL::GL)
-	target_link_libraries(animation PUBLIC OpenGL::GL)
+	target_link_libraries(${PROJECT_NAME} PUBLIC OpenGL::GL)
 else()
 	if(OPENGL_gl_LIBRARY)
-		target_link_libraries(animation PUBLIC ${OPENGL_gl_LIBRARY})
+		target_link_libraries(${PROJECT_NAME} PUBLIC ${OPENGL_gl_LIBRARY})
 	endif()
 endif()
+
+# Main target for testing sample applications
+
+add_executable(animation-app src/main.cpp)
+target_link_libraries(animation-app PRIVATE ${PROJECT_NAME})
