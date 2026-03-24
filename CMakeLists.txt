@@ -8,6 +8,22 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 find_package(OpenGL REQUIRED)
 
+if(LINUX)
+	include(FetchContent)
+
+	FetchContent_Declare(
+        glfw
+        GIT_REPOSITORY https://github.com/glfw/glfw.git
+        GIT_TAG        master
+	)
+	FetchContent_MakeAvailable(glfw)
+
+	set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+	set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+	set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+	set(GLFW_INSTALL OFF CACHE BOOL "" FORCE)
+endif()
+
 add_library(${PROJECT_NAME}
 	include/application.h
 	include/attribute.h
@@ -33,11 +49,16 @@ add_library(${PROJECT_NAME}
 	src/shader.cpp
 	src/texture.cpp
 	src/stb_image.cpp
-	src/windows.h
-	src/windows.cpp
 	src/sample1/sample1.cpp
 	src/sample1/sample1.h
 )
+
+if(WIN32)
+	target_sources(${PROJECT_NAME} PRIVATE
+		src/windows.h
+		src/windows.cpp
+	)
+endif()
 
 target_include_directories(${PROJECT_NAME}
 	PUBLIC
@@ -78,6 +99,10 @@ else()
 endif()
 
 # Main target for testing sample applications
-
-add_executable(animation-app src/main.cpp)
-target_link_libraries(animation-app PRIVATE ${PROJECT_NAME})
+if(LINUX)
+	add_executable(${PROJECT_NAME}-app src/main_linux.cpp)
+	target_link_libraries(${PROJECT_NAME}-app PRIVATE ${PROJECT_NAME} glfw)
+else()
+	add_executable(${PROJECT_NAME}-app src/main_windows.cpp)
+	target_link_libraries(${PROJECT_NAME}-app PRIVATE ${PROJECT_NAME})
+endif()
