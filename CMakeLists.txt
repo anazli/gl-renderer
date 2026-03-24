@@ -44,6 +44,7 @@ add_library(${PROJECT_NAME}
 	include/shader.h
 	include/texture.h
 	include/uniform.h
+	include/window.h
 	include/stb/stb_image.h
 
 	src/application.cpp
@@ -51,6 +52,7 @@ add_library(${PROJECT_NAME}
 	src/index_buffer.cpp
 	src/shader.cpp
 	src/texture.cpp
+	src/window.cpp
 	src/stb_image.cpp
 	src/sample1/sample1.cpp
 	src/sample1/sample1.h
