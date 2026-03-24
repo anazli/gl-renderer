@@ -20,7 +20,6 @@ class Application {
   virtual void Render(float aspect_ratio);
   virtual void Shutdown();
 
-  static Application* Instance();
   static std::unique_ptr<Application> CreateSample1();
   static std::filesystem::path GetAssetsPath();
   static std::filesystem::path GetShadersPath();
@@ -28,7 +27,7 @@ class Application {
  protected:
   Application();
 
-  static std::unique_ptr<Application> m_instance;
+  std::unique_ptr<Application> m_instance;
   GLuint m_vertex_array_obj;
 };
 }  // namespace core

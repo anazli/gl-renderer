@@ -1,16 +1,11 @@
 #include "window.h"
 
-#include "application.h"
-
-// clang-format off
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-// clang-format on
-
 #include <stdexcept>
 
+#include "application.h"
+
 core::AppWindow::AppWindow(int width, int height, const std::string& title)
-    : m_width(width), m_height(height), m_title(title) {
+    : m_window(nullptr), m_width(width), m_height(height), m_title(title) {
   if (!glfwInit()) {
     throw std::runtime_error("Failed to initialize GLFW");
   }

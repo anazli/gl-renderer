@@ -8,17 +8,14 @@
 #include "window.h"
 
 int main() {
+  core::AppWindow window(800, 600, "Animation");
+
   auto application = core::Application::CreateSample1();
-  auto vao = application->GetVertexArrayObject();
-  glGenVertexArrays(1, &vao);
-  glBindVertexArray(vao);
   application->Initialize();
 
-  core::AppWindow window(800, 600, "Animation");
   window.Render(application.get());
 
   application->Shutdown();
-  glDeleteVertexArrays(1, &vao);
 
   return 0;
 }

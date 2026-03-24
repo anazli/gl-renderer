@@ -2,7 +2,10 @@
 
 #include <string>
 
-class GLFWwindow;
+// clang-format off
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+// clang-format on
 
 namespace core {
 
