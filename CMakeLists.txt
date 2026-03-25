@@ -122,9 +122,10 @@ else()
 endif()
 
 target_link_libraries(${PROJECT_NAME}
+	PUBLIC
+		glad
 	PRIVATE
 	 	glfw
-	 	glad
 		math
 		stb_image_impl
 )
@@ -136,8 +137,6 @@ add_executable(${PROJECT_NAME}-app src/main.cpp)
 target_link_libraries(${PROJECT_NAME}-app
 	PRIVATE
 		${PROJECT_NAME}
-		glfw
-		glad
 )
 
 install(TARGETS ${PROJECT_NAME}
