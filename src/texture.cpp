@@ -1,7 +1,8 @@
 #include "texture.h"
 
+#include <stb_image.h>
+
 #include "glad/glad.h"
-#include "stb/stb_image.h"
 
 core::Texture::Texture() : m_width(0), m_height(0), m_channels(0) {
   glGenTextures(1, &m_handle);

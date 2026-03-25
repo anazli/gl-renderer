@@ -10,6 +10,9 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 find_package(OpenGL REQUIRED)
 
+#----------------------------------
+#------------- MATH ---------------
+#----------------------------------
 FetchContent_Declare(
 	math
 	GIT_REPOSITORY https://github.com/anazli/math.git
@@ -18,6 +21,9 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(math)
 set(MATH_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 
+#----------------------------------
+#------------- GLFW ---------------
+#----------------------------------
 FetchContent_Declare(
     glfw
     GIT_REPOSITORY https://github.com/glfw/glfw.git
@@ -29,6 +35,9 @@ set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 set(GLFW_INSTALL OFF CACHE BOOL "" FORCE)
 
+#----------------------------------
+#------------- GLAD ---------------
+#----------------------------------
 FetchContent_Declare(
     glad
     GIT_REPOSITORY https://github.com/Dav1dde/glad.git
@@ -36,6 +45,24 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(glad)
 
+#----------------------------------
+#----------- STB IMAGE ------------
+#----------------------------------
+FetchContent_Declare(
+    stb
+    GIT_REPOSITORY https://github.com/nothings/stb.git
+    GIT_TAG        master
+)
+FetchContent_MakeAvailable(stb)
+
+file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/stb_impl.cpp"
+	"#define STB_IMAGE_IMPLEMENTATION\n#include \"stb_image.h\"")
+
+add_library(stb_image INTERFACE)
+target_include_directories(stb_image INTERFACE ${stb_SOURCE_DIR})
+
+add_library(stb_image_impl STATIC "${CMAKE_CURRENT_BINARY_DIR}/stb_impl.cpp")
+target_link_libraries(stb_image_impl PUBLIC stb_image)
 
 add_library(${PROJECT_NAME}
 	include/application.h
@@ -46,7 +73,6 @@ add_library(${PROJECT_NAME}
 	include/texture.h
 	include/uniform.h
 	include/window.h
-	include/stb/stb_image.h
 
 	src/application.cpp
 	src/draw.cpp
@@ -54,7 +80,6 @@ add_library(${PROJECT_NAME}
 	src/shader.cpp
 	src/texture.cpp
 	src/window.cpp
-	src/stb_image.cpp
 	src/sample1/sample1.cpp
 	src/sample1/sample1.h
 )
@@ -88,8 +113,6 @@ else()
 	)
 endif()
 
-target_link_libraries(${PROJECT_NAME} PRIVATE math)
-
 if(TARGET OpenGL::GL)
 	target_link_libraries(${PROJECT_NAME} PUBLIC OpenGL::GL)
 else()
@@ -98,9 +121,21 @@ else()
 	endif()
 endif()
 
-target_link_libraries(${PROJECT_NAME} PRIVATE glfw glad)
+target_link_libraries(${PROJECT_NAME}
+	PRIVATE
+	 	glfw
+	 	glad
+		math
+		stb_image_impl
+)
+
 target_include_directories(${PROJECT_NAME} PRIVATE ${glad_BINARY_DIR}/include)
 
 # Main target for testing sample applications
 add_executable(${PROJECT_NAME}-app src/main.cpp)
-target_link_libraries(${PROJECT_NAME}-app PRIVATE ${PROJECT_NAME} glfw glad)
+target_link_libraries(${PROJECT_NAME}-app
+	PRIVATE
+		${PROJECT_NAME}
+		glfw
+		glad
+)
