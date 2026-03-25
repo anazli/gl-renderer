@@ -65,15 +65,6 @@ add_library(stb_image_impl STATIC "${CMAKE_CURRENT_BINARY_DIR}/stb_impl.cpp")
 target_link_libraries(stb_image_impl PUBLIC stb_image)
 
 add_library(${PROJECT_NAME}
-	include/application.h
-	include/attribute.h
-	include/draw.h
-	include/index_buffer.h
-	include/shader.h
-	include/texture.h
-	include/uniform.h
-	include/window.h
-
 	src/application.cpp
 	src/draw.cpp
 	src/index_buffer.cpp
@@ -82,6 +73,22 @@ add_library(${PROJECT_NAME}
 	src/window.cpp
 	src/sample1/sample1.cpp
 	src/sample1/sample1.h
+)
+
+target_sources(${PROJECT_NAME}
+ PUBLIC
+    FILE_SET headers
+    TYPE HEADERS
+    BASE_DIRS include
+    FILES
+	include/application.h
+	include/attribute.h
+	include/draw.h
+	include/index_buffer.h
+	include/shader.h
+	include/texture.h
+	include/uniform.h
+	include/window.h
 )
 
 target_include_directories(${PROJECT_NAME}
