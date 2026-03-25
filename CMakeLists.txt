@@ -16,6 +16,7 @@ FetchContent_Declare(
 	GIT_TAG main
 )
 FetchContent_MakeAvailable(math)
+set(MATH_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 
 FetchContent_Declare(
     glfw
