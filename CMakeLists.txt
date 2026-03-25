@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.25)
 
-project(animation LANGUAGES C CXX)
+project(gl-renderer LANGUAGES C CXX)
 
 include(FetchContent)
 
@@ -138,4 +138,12 @@ target_link_libraries(${PROJECT_NAME}-app
 		${PROJECT_NAME}
 		glfw
 		glad
+)
+
+install(TARGETS ${PROJECT_NAME}
+  EXPORT ${PROJECT_NAME}Targets
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+  RUNTIME DESTINATION bin
+  FILE_SET headers DESTINATION include
 )
