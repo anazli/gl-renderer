@@ -132,12 +132,14 @@ target_link_libraries(${PROJECT_NAME}
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${glad_BINARY_DIR}/include)
 
-# Main target for testing sample applications
-add_executable(${PROJECT_NAME}-app src/main.cpp)
-target_link_libraries(${PROJECT_NAME}-app
-	PRIVATE
-		${PROJECT_NAME}
-)
+if(PROJECT_IS_TOP_LEVEL)
+	# Main target for testing sample applications
+	add_executable(${PROJECT_NAME}-app src/main.cpp)
+	target_link_libraries(${PROJECT_NAME}-app
+		PRIVATE
+			${PROJECT_NAME}
+	)
+endif()
 
 install(TARGETS ${PROJECT_NAME}
   EXPORT ${PROJECT_NAME}Targets
