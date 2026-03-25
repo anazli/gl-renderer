@@ -3,9 +3,8 @@
 #include <mat4.h>
 #include <quat.h>
 
-#include "draw.h"
-#include "uniform.h"
-
+#include "gfx/draw.h"
+#include "gfx/uniform.h"
 
 Sample1::Sample1() : core::Application(), m_rotation(0.f) {}
 

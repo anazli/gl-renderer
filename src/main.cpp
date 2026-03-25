@@ -4,8 +4,8 @@
 #include <GLFW/glfw3.h>
 // clang-format on
 
-#include "application.h"
-#include "window.h"
+#include "gfx/application.h"
+#include "gfx/window.h"
 
 int main() {
   core::AppWindow window(800, 600, "Animation");

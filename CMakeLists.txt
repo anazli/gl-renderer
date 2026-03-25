@@ -81,14 +81,14 @@ target_sources(${PROJECT_NAME}
     TYPE HEADERS
     BASE_DIRS include
     FILES
-	include/application.h
-	include/attribute.h
-	include/draw.h
-	include/index_buffer.h
-	include/shader.h
-	include/texture.h
-	include/uniform.h
-	include/window.h
+	include/gfx/application.h
+	include/gfx/attribute.h
+	include/gfx/draw.h
+	include/gfx/index_buffer.h
+	include/gfx/shader.h
+	include/gfx/texture.h
+	include/gfx/uniform.h
+	include/gfx/window.h
 )
 
 target_include_directories(${PROJECT_NAME}

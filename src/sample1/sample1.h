@@ -1,10 +1,10 @@
 #pragma once
 
-#include "application.h"
-#include "attribute.h"
-#include "index_buffer.h"
-#include "shader.h"
-#include "texture.h"
+#include "gfx/application.h"
+#include "gfx/attribute.h"
+#include "gfx/index_buffer.h"
+#include "gfx/shader.h"
+#include "gfx/texture.h"
 
 class Sample1 : public core::Application {
  public:

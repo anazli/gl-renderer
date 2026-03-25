@@ -1,8 +1,8 @@
-#include "window.h"
+#include "gfx/window.h"
 
 #include <stdexcept>
 
-#include "application.h"
+#include "gfx/application.h"
 
 core::AppWindow::AppWindow(int width, int height, const std::string& title)
     : m_window(nullptr), m_width(width), m_height(height), m_title(title) {

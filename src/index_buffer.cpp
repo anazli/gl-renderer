@@ -1,4 +1,4 @@
-#include "index_buffer.h"
+#include "gfx/index_buffer.h"
 
 #include "glad/glad.h"
 

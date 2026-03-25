@@ -1,9 +1,10 @@
-#include "draw.h"
+#include "gfx/draw.h"
+
+#include <glad/glad.h>
 
 #include <cassert>
 
-#include "glad/glad.h"
-#include "index_buffer.h"
+#include "gfx/index_buffer.h"
 
 namespace {
 GLenum MapPrimitiveTypeToGLenum(core::PrimitiveType type) {
